@@ -37,7 +37,7 @@ export class Product {
   tags: string[];
 
   @OneToMany(() => ProductImage, (productImage) => productImage.product, {
-    cascade: true,
+    cascade: true, eager:true // cargamos el eager para que al momento de listar, se manden los datos de la s relaciones que tengamos de froma automatica
   })
   images: ProductImage[];
 

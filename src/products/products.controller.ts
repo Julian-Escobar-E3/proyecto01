@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -30,16 +31,19 @@ export class ProductsController {
 
   @Get(':termino')
   findOne(@Param('termino') termino: string) {
-    return this.productsService.findOne(termino); //tener presente el tipo de dato que vamos a buscar segun los tipos de datos definidos en las entidades
+    return this.productsService.buscayaplana(termino); //tener presente el tipo de dato que vamos a buscar segun los tipos de datos definidos en las entidades
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
     return this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.productsService.remove(id);
   }
 }
