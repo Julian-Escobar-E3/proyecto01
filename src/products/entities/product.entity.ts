@@ -3,8 +3,10 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ProductImage } from './product-image.entity';
 
 @Entity()
 export class Product {
@@ -33,6 +35,11 @@ export class Product {
 
   @Column('text', { array: true, default: [] }) // manejamos el each para que se maneje la info de forma dinamica s
   tags: string[];
+
+  @OneToMany(() => ProductImage, (productImage) => productImage.product, {
+    cascade: true,
+  })
+  images: ProductImage[];
 
   // Funcionalidades de TypeORM para el manejo de creacion y actualizacion respectivamente
   @BeforeInsert()
